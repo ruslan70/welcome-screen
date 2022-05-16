@@ -14,7 +14,7 @@
         </ul>
 
       <ul>
-        <li>
+        <li class="list">
           <div id="text1">
             <!-- <h2>14:00</h2>
             <h3>Basisbeschätigung Besuch</h3>
@@ -120,6 +120,9 @@ body {
   font-size: 50px;
   padding: 40px;
 }
+.list {
+  list-style-type: none;
+}
 .list-group-item {
   color: crimson;
   text-align: left;
@@ -149,7 +152,10 @@ p {
   width: auto;
   border: 0px;
   padding: 20px;
-  margin: 50px;
+  margin-left: 50px;
+  margin-right: 80px;
+  margin-top: 30px;
+ margin-bottom: 30px;
  
 }
 
@@ -160,7 +166,10 @@ p {
   width: auto;
   border: 0px;
   padding: 20px;
-  margin: 50px;
+  margin-left: 50px;
+  margin-right: 80px;
+  margin-top: 30px;
+ margin-bottom: 30px;
  
 }
 
@@ -171,8 +180,10 @@ p {
   width: auto;
   border: 0px;
   padding: 20px;
-  margin: 50px;
- 
+  margin-left: 50px;
+  margin-right: 80px;
+ margin-top: 30px;
+ margin-bottom: 30px;
 }
 
 #footer {
