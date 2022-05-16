@@ -112,17 +112,22 @@ export default {
 #app {
   
 }
+
 body {
   background-color: rgb(223, 241, 247);
 }
+
 #title {
-  font-family:Arial, Helvetica, sans-serif ;
-  font-size: 50px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 70px;
   padding: 40px;
+  font-weight: bold;
 }
+
 .list {
   list-style-type: none;
 }
+
 .list-group-item {
   color: crimson;
   text-align: left;
@@ -135,17 +140,19 @@ h1 {
   margin: 50px;
   
 }
+
 h2    {
   color: darkred;
 }
 
 p { 
   text-align: left;
-  font-family: verdana, medium, rgb(245, 3, 48);
+  font-family: Arial, Helvetica, sans-serif rgb(245, 3, 48);
   font-size: 20px;
   
 }
 #text1 {
+  font-family: Arial, Helvetica, sans-serif;
   color: white;
   font: medium;
   background-color: rgb(109, 55, 196);
@@ -155,11 +162,12 @@ p {
   margin-left: 50px;
   margin-right: 80px;
   margin-top: 30px;
- margin-bottom: 30px;
+  margin-bottom: 30px;
  
 }
 
 #text2 {
+  font-family: Arial, Helvetica, sans-serif;
   color: white;
   font: medium;
   background-color: rgb(109, 55, 196);
@@ -169,11 +177,12 @@ p {
   margin-left: 50px;
   margin-right: 80px;
   margin-top: 30px;
- margin-bottom: 30px;
+  margin-bottom: 30px;
  
 }
 
 #text3 {
+  font-family: Arial, Helvetica, sans-serif;
   color: white;
   font: medium;
   background-color: rgb(109, 55, 196);
@@ -182,8 +191,8 @@ p {
   padding: 20px;
   margin-left: 50px;
   margin-right: 80px;
- margin-top: 30px;
- margin-bottom: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 #footer {
