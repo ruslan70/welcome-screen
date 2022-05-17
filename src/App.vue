@@ -4,71 +4,54 @@
     
 
     
-      <h1 id="title"><strong></strong>{{ title }}</h1>
+    <h1 id="title"><strong></strong>{{ title }}
+    </h1>
       
-        <ul class="list-group">
-          
-          <h1 class="list-group-item" v-show="date"><strong></strong> {{ date }}</h1>
-          
-          
-        </ul>
+      
+      
 
-      <ul>
-        <li class="list">
-          <div id="text1">
-            <!-- <h2>14:00</h2>
-            <h3>Basisbeschätigung Besuch</h3>
-            <p>Interessierte für den zweiten Kurs werden uns besuchen</p> -->
-            <h2>{{ time1 }}</h2>
-            <p>{{ title1 }}</p>
-            <p>{{ descriprion1 }}</p>
-          </div>
-        
+    <ul>
+      <h1 class="list-group-item" v-show="currentDate"><strong></strong> {{ currentDate }}</h1>
+      
 
-       
-          <div id="text2">
-            <h2>14:00</h2>
-            <p>Basisbeschätigung Besuch</p>
-            <p>Interessierte für den zweiten Kurs werden uns besuchen</p>
-            <!-- <h2>{{ time2 }}/h2>
-            <p>{{ title2 }}</p>
-            <p>{{ descriprion2 }}</p> -->
-          </div>
+      <li class="entry-list"
+          v-for="entry in entries.slice(1)"
+          :key="entry"
+      >
+            
+        <span class="entry-time">{{ entry[0]}} {{ entry[1]}}</span>
+        <h2 class="entry-title">{{ entry[2]}}</h2>
+        <h3 class="entry-description">{{ entry[3]}}</h3>
+      </li>       
+    </ul>       
+          
         
-
-       
-          <div id="text3">
-            <h2>14:00</h2>
-            <p>Basisbeschätigung Besuch</p>
-            <p>Interessierte für den zweiten Kurs werden uns besuchen</p>
-            <!-- <h2>{{ time3 }}</h2>
-            <p>{{ title3}}</p>
-            <p>{{ descriprion3 }}</p> -->
-          </div>
-        </li>
-        
-      </ul>
-      <div id=footer>
+            
+    <div id=footer>
 
         <img 
           :src="imgLink1" 
-          :width="logoWidth1"
+        
         >
 
         <img 
           v-bind:src="imgLink2" 
-          :width="logoWidth2"
+          
         >
 
          <img 
           :src="imgLink3" 
-          :width="logoWidth3"
+          
         >
-      </div>
     </div>
-</template>
 
+  </div>
+</template>      
+      
+
+        
 <script>
+import axios from "axios"; // axios is a library for making HTTP requests to the backend
 
 
 export default {
@@ -77,10 +60,10 @@ export default {
   data() {
     return {
         title: "Welcome to Opportunity",
-        time1: "14:00",
-        title1: "Basisbeschätigung Besuch",
-        descriprion1: "Interessierte für den zweiten Kurs werden uns besuchen",
-        date: '',
+        currentDate: '',
+        sheet_id:"1a81aI0Y8ViZO0tI92h2YSMqVQJ8hmNNMyMylXgvwiU4",
+        api_token:"AIzaSyA-qeDXOhEeQDA0vQf7LgkF7DQtGnAtmAU",
+        entries:[],
         imgLink1: require("../src/assets/Stadt Zürich.png"),
         // logoWidth1: 100,
         imgLink2: require("../src/assets/Opportunity.png"),
@@ -90,27 +73,50 @@ export default {
       };
     },
   
-    
-      
+        computed: {
+            // computed properties are like data properties, but with a method combined and it gets executed automaticly
+            gsheet_url() {
+            
+            return `https://sheets.googleapis.com/v4/spreadsheets/${this.sheet_id}/values:batchGet?ranges=A1%3AE100&valueRenderOption=FORMATTED_VALUE&key=${this.api_token}`;
+
+        },
+        },
         methods: {
+          getData() {
+            axios.get(this.gsheet_url).then((response) => {
+              this.entries = response.data.valueRanges[0].values;
+            });
+          },
           
-          printDate: function () {
+          printcurrentDate: function () {
             return new Date().toLocaleDateString();
           }
           
           
         },
 
-        mounted: function () {
-          this.date = this.printDate();
-        }
+        mounted () {
+          this.getData();
+          this.currentDate= this.printcurrentDate();
+        },
   
 }
 </script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap');
+
 #app {
-  
+  font-family:'Inter', Arial, Helvetica, sans-serif; 
+}
+
+.entry-time{
+  color: #ffffff;
+}
+
+h2 {
+  color: rgb(219, 85, 94);
 }
 
 body {
@@ -118,79 +124,38 @@ body {
 }
 
 #title {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 70px;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 60px;
   padding: 40px;
-  font-weight: bold;
-}
-
-.list {
-  list-style-type: none;
+  font-weight: 900;
 }
 
 .list-group-item {
-  color: crimson;
+  color: rgb(104, 106, 119);
   text-align: left;
-
+  font-size: 50px;
 }
 
 h1 {
   color: rgb(0, 0, 0);
   text-align: auto;
   margin: 50px;
-  
 }
 
 h2    {
-  color: darkred;
+  color: rgb(219, 85, 94);
 }
 
-p { 
-  text-align: left;
-  font-family: Arial, Helvetica, sans-serif rgb(245, 3, 48);
-  font-size: 20px;
-  
-}
-#text1 {
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
+.entry-list{
+  list-style-type: none;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  color: #e1a6c0;
   font: medium;
   background-color: rgb(109, 55, 196);
-  width: auto;
   border: 0px;
   padding: 20px;
   margin-left: 50px;
-  margin-right: 80px;
-  margin-top: 30px;
-  margin-bottom: 30px;
- 
-}
-
-#text2 {
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
-  font: medium;
-  background-color: rgb(109, 55, 196);
-  width: auto;
-  border: 0px;
-  padding: 20px;
-  margin-left: 50px;
-  margin-right: 80px;
-  margin-top: 30px;
-  margin-bottom: 30px;
- 
-}
-
-#text3 {
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
-  font: medium;
-  background-color: rgb(109, 55, 196);
-  width: auto;
-  border: 0px;
-  padding: 20px;
-  margin-left: 50px;
-  margin-right: 80px;
+  margin-right: 50px;
   margin-top: 30px;
   margin-bottom: 30px;
 }
@@ -202,15 +167,14 @@ p {
   position: fixed;
   bottom: 0;
   left: 0px;
-  padding: 15px;
+  padding: 40px;
   background-color: #ffffff;
   margin: 0px;
   width: 100%;
-  
-  
 }
 
 #footer img {
   height: 50px;
 }
+
 </style>
