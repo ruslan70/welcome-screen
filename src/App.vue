@@ -1,21 +1,15 @@
 <template>
   <div id="app">
      
-    
-
-    
-    <h1 id="title"><strong></strong>{{ title }}
-    </h1>
+    <h1 id="title">{{ title }}</h1>
+    <h1 class="currentDate">{{ printcurrentDate() }}</h1>
       
-      
-      
-
     <ul v-if="entries">
-      <h1 class="list-group-item" v-show="currentDate"><strong></strong>{{ currentDate }}</h1>
+
 
       
       <li class="entry-list"
-          v-for="entry in entries.slice(1)"
+          v-for="entry in entries"
           :key="entry.id"
       >
         <span class="entry-time">{{ entry[0]}} {{ entry[1].replaceAll("/",".")}}</span>
@@ -23,7 +17,7 @@
         <h3 class="entry-description">{{ entry[3]}}</h3>
       </li>       
     </ul>       
-     <h1 class="no-entries" v-else>No entries!</h1> 
+    <h1 v-else class="no-entries" >No entries!</h1> 
         
             
     <div id=footer>
@@ -59,7 +53,6 @@ export default {
   data() {
     return {
         title: "Welcome to Opportunity",
-        currentDate: '',
         sheet_id:"1a81aI0Y8ViZO0tI92h2YSMqVQJ8hmNNMyMylXgvwiU4",
         api_token:"AIzaSyA-qeDXOhEeQDA0vQf7LgkF7DQtGnAtmAU",
         entries:[],
@@ -76,7 +69,7 @@ export default {
             // computed properties are like data properties, but with a method combined and it gets executed automaticly
             gsheet_url() {
             
-            return `https://sheets.googleapis.com/v4/spreadsheets/${this.sheet_id}/values:batchGet?ranges=A1%3AE100&valueRenderOption=FORMATTED_VALUE&key=${this.api_token}`;
+            return `https://sheets.googleapis.com/v4/spreadsheets/${this.sheet_id}/values:batchGet?ranges=A2%3AE100&valueRenderOption=FORMATTED_VALUE&key=${this.api_token}`;
 
         },
         },
@@ -86,19 +79,39 @@ export default {
               this.entries = response.data.valueRanges[0].values;
             });
           },
+
+          refreshData() {
+            
+              this.getData();
+              this.printcurrentDate()
+           
+          },
           
           printcurrentDate: function () {
 
-            return new Date().toLocaleDateString();
+           return new Date().toLocaleDateString();
           }
           
           
         },
 
         mounted () {
-          this.getData();
-          this.currentDate= this.printcurrentDate();
-        },
+          // this.refreshData();
+          // setInterval(
+          //  this.refreshData, 
+          //  1800000);
+
+           
+           // oder andere Weise das gleiche zu schreiben:
+            this.refreshData();
+            setInterval( function(){
+             this.refreshData(); 
+          }, 1000*60*30);
+
+           
+
+          
+        }
   
 }
 </script>
@@ -113,7 +126,8 @@ export default {
 
 .no-entries {
   background-color: blue;
-  padding: 10px;
+  padding: 40px;
+  margin-left: 80px;
   text-align: center;
   font-size: 50px;
   color: rgb(255, 234, 0);
@@ -138,10 +152,11 @@ body {
   font-weight: 900;
 }
 
-.list-group-item {
+.currentDate {
   color: rgb(104, 106, 119);
   text-align: left;
   font-size: 50px;
+  padding: 40px;
 }
 
 h1 {
