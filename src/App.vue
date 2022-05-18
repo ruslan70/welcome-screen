@@ -11,15 +11,15 @@
       
 
     <ul>
-      <h1 class="list-group-item" v-show="currentDate"><strong></strong> {{ currentDate }}</h1>
-      
+      <h1 class="list-group-item" v-show="currentDate"><strong></strong>{{ currentDate }}</h1>
+      .'
 
       <li class="entry-list"
           v-for="entry in entries.slice(1)"
           :key="entry"
       >
             
-        <span class="entry-time">{{ entry[0]}} {{ entry[1]}}</span>
+        <span class="entry-time">{{ entry[0]}} {{ entry[1].replaceAll("/",".")}}</span>
         <h2 class="entry-title">{{ entry[2]}}</h2>
         <h3 class="entry-description">{{ entry[3]}}</h3>
       </li>       
@@ -89,6 +89,7 @@ export default {
           },
           
           printcurrentDate: function () {
+
             return new Date().toLocaleDateString();
           }
           
