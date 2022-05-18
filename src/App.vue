@@ -10,21 +10,20 @@
       
       
 
-    <ul>
+    <ul v-if="entries">
       <h1 class="list-group-item" v-show="currentDate"><strong></strong>{{ currentDate }}</h1>
-      .'
 
+      
       <li class="entry-list"
           v-for="entry in entries.slice(1)"
-          :key="entry"
+          :key="entry.id"
       >
-            
         <span class="entry-time">{{ entry[0]}} {{ entry[1].replaceAll("/",".")}}</span>
         <h2 class="entry-title">{{ entry[2]}}</h2>
         <h3 class="entry-description">{{ entry[3]}}</h3>
       </li>       
     </ul>       
-          
+     <h1 class="no-entries" v-else>No entries!</h1> 
         
             
     <div id=footer>
@@ -112,6 +111,14 @@ export default {
   font-family:'Inter', Arial, Helvetica, sans-serif; 
 }
 
+.no-entries {
+  background-color: blue;
+  padding: 10px;
+  text-align: center;
+  font-size: 50px;
+  color: rgb(255, 234, 0);
+}
+
 .entry-time{
   color: #ffffff;
 }
@@ -141,10 +148,6 @@ h1 {
   color: rgb(0, 0, 0);
   text-align: auto;
   margin: 50px;
-}
-
-h2    {
-  color: rgb(219, 85, 94);
 }
 
 .entry-list{
