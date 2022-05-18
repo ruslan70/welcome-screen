@@ -69,9 +69,9 @@ export default {
             // computed properties are like data properties, but with a method combined and it gets executed automaticly
             gsheet_url() {
             
-            return `https://sheets.googleapis.com/v4/spreadsheets/${this.sheet_id}/values:batchGet?ranges=A2%3AE100&valueRenderOption=FORMATTED_VALUE&key=${this.api_token}`;
+              return `https://sheets.googleapis.com/v4/spreadsheets/${this.sheet_id}/values:batchGet?ranges=A2%3AE100&valueRenderOption=FORMATTED_VALUE&key=${this.api_token}`;
 
-        },
+            },
         },
         methods: {
           getData() {
@@ -96,22 +96,25 @@ export default {
         },
 
         mounted () {
-          // this.refreshData();
-          // setInterval(
-          //  this.refreshData, 
-          //  1800000);
-
-           
-           // oder andere Weise das gleiche zu schreiben:
-            this.refreshData();
-            setInterval( function(){
-             this.refreshData(); 
-          }, 1000*60*30);
-
-           
-
-          
+          this.refreshData();// get first initial data and then wait for the next
+          setInterval(this.refreshData, 1000*60*30);// wait 30mins for next update
         }
+        
+          // oder andere Weise das gleiche zu schreiben:
+
+          // this.refreshData(); 
+          // setInterval(
+          // this.refreshData,
+          // 18000000); 
+         
+          //  oder so:
+
+          //   this.refreshData();
+          //   setInterval( function(){
+          //   this.refreshData(); 
+          //   }, 1000*60*30); 
+          
+          // oder so:
   
 }
 </script>
