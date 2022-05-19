@@ -6,35 +6,34 @@
       
     <ul v-if="entries">
 
-
-      
       <li class="entry-list"
           v-for="entry in entries"
-          :key="entry.id"
-      >
-        <span class="entry-time">{{ entry[0]}} {{ entry[1].replaceAll("/",".")}}</span>
-        <h2 class="entry-title">{{ entry[2]}}</h2>
-        <h3 class="entry-description">{{ entry[3]}}</h3>
-      </li>       
-    </ul>       
+          :key="entry.id">
+        
+          <span class="entry-time">{{ entry[0]}} {{ entry[1].replaceAll("/",".")}}</span>
+          <h2 class="entry-title">{{ entry[2]}}</h2>
+          <h3 class="entry-description">{{ entry[3]}}</h3>
+      </li>
+
+    </ul>
+
     <h1 v-else class="no-entries" >No entries!</h1> 
+      
+     
         
             
     <div id=footer>
 
         <img 
-          :src="imgLink1" 
-        
+          :src="imgLink1"
         >
 
         <img 
           v-bind:src="imgLink2" 
-          
         >
 
-         <img 
+        <img 
           :src="imgLink3" 
-          
         >
     </div>
 
@@ -57,13 +56,10 @@ export default {
         api_token:"AIzaSyA-qeDXOhEeQDA0vQf7LgkF7DQtGnAtmAU",
         entries:[],
         imgLink1: require("../src/assets/Stadt Zürich.png"),
-        // logoWidth1: 100,
         imgLink2: require("../src/assets/Opportunity.png"),
-        // logoWidth2: 100,
         imgLink3: require("../src/assets/SAG.png"),
-        // logoWidth3: 100,
       };
-    },
+  },
   
         computed: {
             // computed properties are like data properties, but with a method combined and it gets executed automaticly
@@ -97,7 +93,7 @@ export default {
 
         mounted () {
           this.refreshData();// get first initial data and then wait for the next
-          setInterval(this.refreshData, 1000*60*30);// wait 30mins for next update
+          setInterval(this.refreshData, 1000*60*60*24);// wait 24 hours for next update
         }
         
           // oder andere Weise das gleiche zu schreiben:
@@ -109,12 +105,10 @@ export default {
          
           //  oder so:
 
-          //   this.refreshData();
-          //   setInterval( function(){
-          //   this.refreshData(); 
-          //   }, 1000*60*30); 
-          
-          // oder so:
+          //  this.refreshData();
+          //  setInterval( function(){
+          //  this.refreshData(); 
+          //  }, 1000*60*30);
   
 }
 </script>
@@ -136,7 +130,7 @@ export default {
   color: rgb(255, 234, 0);
 }
 
-.entry-time{
+.entry-time {
   color: #ffffff;
 }
 
@@ -168,7 +162,7 @@ h1 {
   margin: 50px;
 }
 
-.entry-list{
+.entry-list {
   list-style-type: none;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   color: #e1a6c0;
